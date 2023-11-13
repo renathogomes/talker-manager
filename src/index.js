@@ -1,6 +1,7 @@
 const express = require('express');
 
 const talkersRouter = require('./routers/talkers.router');
+const loginRouter = require('./routers/login.router');
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use(talkersRouter);
+app.use(loginRouter);
 
 app.listen(PORT, () => {
   console.log('Online');
