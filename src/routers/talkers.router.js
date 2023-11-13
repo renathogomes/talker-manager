@@ -10,3 +10,5 @@ router.get('/talker', async (_req, res) => {
   const talkers = await readTalkerFile();
   res.status(HTTP_OK_STATUS).json(talkers);
 });
+
+module.exports = router;

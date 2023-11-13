@@ -1,13 +1,14 @@
-const fs = require('fs');
+const fs = require('fs').promises;
+const path = require('path');
 
-const TALKER_FILE = './talker.json';
+const TALKER_FILE = '../talker.json';
 
 const readTalkerFile = async () => {
   try {
-    const file = await fs.promises.readFile(TALKER_FILE, 'utf-8');
-    return JSON.parse(file);
-  } catch (err) {
-    console.error(err.message);
+    const talkerFile = await fs.readFile(path.resolve(__dirname, TALKER_FILE), 'utf-8');
+    return JSON.parse(talkerFile);
+  } catch (error) {
+    console.error('Erro ao ler o arquivo', error);
   }
 };
 
