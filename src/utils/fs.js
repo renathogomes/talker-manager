@@ -12,6 +12,12 @@ const readTalkerFile = async () => {
   }
 };
 
+const findTalkerById = async (id) => {
+  const talkers = await readTalkerFile();
+  return talkers.find((talker) => talker.id === Number(id));
+};
+
 module.exports = {
   readTalkerFile,
+  findTalkerById,
 };
