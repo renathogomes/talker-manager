@@ -2,7 +2,8 @@ const express = require('express');
 
 const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
 const authorizationValidation = require('../middleware/authorization.validation');
-const nomeValidation = require('../middleware/nome.validation');
+const nameValidation = require('../middleware/name.validation');
+const ageValidate = require('../middleware/age.validation');
 
 const router = express.Router();
 
@@ -21,10 +22,14 @@ router.get('/talker/:id', async (req, res) => {
   res.status(HTTP_OK_STATUS).json(talker);
 });
 
-router.post('/talker', authorizationValidation, nomeValidation, async (req, res) => {
-  const newTalker = req.body;
-  await addTalker(newTalker);
-  res.status(HTTP_CREATED_STATUS).json(newTalker);
-});
+router.post('/talker',
+  authorizationValidation,
+  nameValidation,
+  ageValidate,
+  async (req, res) => {
+    const newTalker = req.body;
+    await addTalker(newTalker);
+    res.status(HTTP_CREATED_STATUS).json(newTalker);
+  });
 
 module.exports = router;

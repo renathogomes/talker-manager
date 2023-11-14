@@ -1,6 +1,6 @@
 const HTTP_BAD_REQUEST_STATUS = 400;
 
-const nomeValidation = (req, res, next) => {
+const nameValidation = (req, res, next) => {
   const { name } = req.body;
   if (!name) {
     return res.status(HTTP_BAD_REQUEST_STATUS).json({ message: 'O campo "name" é obrigatório' });
@@ -12,4 +12,4 @@ const nomeValidation = (req, res, next) => {
   next();
 };
 
-module.exports = nomeValidation;
+module.exports = nameValidation;
