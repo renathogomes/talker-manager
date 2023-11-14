@@ -4,6 +4,8 @@ const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
 const authorizationValidation = require('../middleware/authorization.validation');
 const nameValidation = require('../middleware/name.validation');
 const ageValidate = require('../middleware/age.validation');
+const talkValidation = require('../middleware/talk.validation');
+const watchedAtValidation = require('../middleware/watchedAt.validation');
 
 const router = express.Router();
 
@@ -26,6 +28,8 @@ router.post('/talker',
   authorizationValidation,
   nameValidation,
   ageValidate,
+  talkValidation,
+  watchedAtValidation,
   async (req, res) => {
     const newTalker = req.body;
     await addTalker(newTalker);
