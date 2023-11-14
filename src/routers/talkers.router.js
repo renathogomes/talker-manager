@@ -6,6 +6,7 @@ const nameValidation = require('../middleware/name.validation');
 const ageValidate = require('../middleware/age.validation');
 const talkValidation = require('../middleware/talk.validation');
 const watchedAtValidation = require('../middleware/watchedAt.validation');
+const rateValidation = require('../middleware/rate.validation');
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.post('/talker',
   ageValidate,
   talkValidation,
   watchedAtValidation,
+  rateValidation,
   async (req, res) => {
     const newTalker = req.body;
     await addTalker(newTalker);
