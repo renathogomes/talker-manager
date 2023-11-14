@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { readTalkerFile, findTalkerById } = require('../utils/fs');
+const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
 
 const router = express.Router();
 
@@ -16,6 +16,12 @@ router.get('/talker/:id', async (req, res) => {
   const talker = await findTalkerById(id);
   if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   res.status(HTTP_OK_STATUS).json(talker);
+});
+
+router.post('/talker', async (req, res) => {
+  const newTalker = req.body;
+  await addTalker(newTalker);
+  res.status(201).json(newTalker);
 });
 
 module.exports = router;
