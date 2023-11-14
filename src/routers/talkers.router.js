@@ -7,6 +7,8 @@ const ageValidate = require('../middleware/age.validation');
 const talkValidation = require('../middleware/talk.validation');
 const watchedAtValidation = require('../middleware/watchedAt.validation');
 const rateValidation = require('../middleware/rate.validation');
+const rateZeroValidation = require('../middleware/rate.zero.validation');
+const rateRangeValidation = require('../middleware/rate.range.validation');
 
 const router = express.Router();
 
@@ -32,6 +34,8 @@ router.post('/talker',
   talkValidation,
   watchedAtValidation,
   rateValidation,
+  rateZeroValidation,
+  rateRangeValidation,
   async (req, res) => {
     const newTalker = req.body;
     await addTalker(newTalker);
