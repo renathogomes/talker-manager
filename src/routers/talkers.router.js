@@ -5,6 +5,7 @@ const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
 const router = express.Router();
 
 const HTTP_OK_STATUS = 200;
+const HTTP_CREATED_STATUS = 201;
 
 router.get('/talker', async (_req, res) => {
   const talkers = await readTalkerFile();
@@ -21,7 +22,7 @@ router.get('/talker/:id', async (req, res) => {
 router.post('/talker', async (req, res) => {
   const newTalker = req.body;
   await addTalker(newTalker);
-  res.status(201).json(newTalker);
+  res.status(HTTP_CREATED_STATUS).json(newTalker);
 });
 
 module.exports = router;
