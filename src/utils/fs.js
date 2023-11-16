@@ -28,8 +28,13 @@ const addTalker = async (talker) => {
 const updateTalker = async (talker) => {
   const talkers = await readTalkerFile();
   const talkerIndex = talkers.findIndex((t) => t.id === talker.id);
-  talkers[talkerIndex] = talker;
-  await fs.writeFile(path.resolve(__dirname, TALKER_FILE), JSON.stringify(talkers));
+
+  if (talkerIndex !== -1) {
+    talkers[talkerIndex] = talker;
+    await fs.writeFile(path.resolve(__dirname, TALKER_FILE), JSON.stringify(talkers));
+  } else {
+    throw new Error('Pessoa palestrante não encontrada');
+  }
 };
 
 module.exports = {

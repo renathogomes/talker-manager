@@ -56,8 +56,12 @@ router.put('/talker/:id',
     const { id } = req.params;
     const talker = req.body;
     talker.id = parseInt(id, 10);
-    await updateTalker(talker);
-    res.status(HTTP_OK_STATUS).json(talker);
+    try {
+      await updateTalker(talker);
+      res.status(HTTP_OK_STATUS).json(talker);
+    } catch (error) {
+      res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+    }
   });
 
 module.exports = router;
