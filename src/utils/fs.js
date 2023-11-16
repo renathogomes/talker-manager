@@ -37,9 +37,22 @@ const updateTalker = async (talker) => {
   }
 };
 
+const deleteTalker = async (id) => {
+  const talkers = await readTalkerFile();
+  const talkerIndex = talkers.findIndex((t) => t.id === parseInt(id, 10));
+
+  if (talkerIndex !== -1) {
+    talkers.splice(talkerIndex, 1);
+    await fs.writeFile(path.resolve(__dirname, TALKER_FILE), JSON.stringify(talkers));
+  } else {
+    throw new Error('Pessoa palestrante não encontrada');
+  }
+};
+
 module.exports = {
   readTalkerFile,
   findTalkerById,
   addTalker,
   updateTalker,
+  deleteTalker,
 };

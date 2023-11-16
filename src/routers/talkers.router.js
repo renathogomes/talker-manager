@@ -2,7 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 
-const { readTalkerFile, findTalkerById, addTalker, updateTalker } = require('../utils/fs');
+const {
+  readTalkerFile,
+  findTalkerById,
+  addTalker,
+  updateTalker,
+  deleteTalker,
+} = require('../utils/fs');
 
 const authorizationValidation = require('../middleware/authorization.validation');
 const nameValidation = require('../middleware/name.validation');
@@ -15,6 +21,7 @@ const rateRangeValidation = require('../middleware/rate.range.validation');
 
 const HTTP_OK_STATUS = 200;
 const HTTP_CREATED_STATUS = 201;
+const HTTP_NO_CONTENT_STATUS = 204;
 const HTTP_NOT_FOUND_STATUS = 404;
 
 router.get('/talker', async (_req, res) => {
@@ -64,8 +71,18 @@ router.put('/talker/:id',
       await updateTalker(talker);
       res.status(HTTP_OK_STATUS).json(talker);
     } catch (error) {
-      res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+      res.status(HTTP_NOT_FOUND_STATUS).json({ message: 'Pessoa palestrante não encontrada' });
     }
   });
+
+router.delete('/talker/:id', authorizationValidation, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await deleteTalker(id);
+    res.status(HTTP_NO_CONTENT_STATUS).json({ message: 'Pessoa palestrante deletada com sucesso' });
+  } catch (error) {
+    res.status(HTTP_NOT_FOUND_STATUS).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+});
 
 module.exports = router;
