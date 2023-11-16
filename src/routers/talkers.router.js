@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
+const { readTalkerFile, findTalkerById, addTalker, updateTalker } = require('../utils/fs');
 
 const authorizationValidation = require('../middleware/authorization.validation');
 const nameValidation = require('../middleware/name.validation');
@@ -41,6 +41,23 @@ router.post('/talker',
     const newTalker = req.body;
     const n = await addTalker(newTalker);
     res.status(HTTP_CREATED_STATUS).json(n);
+  });
+
+router.put('/talker/:id',
+  talkValidation,
+  rateZeroValidation,
+  rateValidation,
+  rateRangeValidation,
+  authorizationValidation,
+  nameValidation,
+  ageValidate,
+  watchedAtValidation,
+  async (req, res) => {
+    const { id } = req.params;
+    const talker = req.body;
+    talker.id = parseInt(id, 10);
+    await updateTalker(talker);
+    res.status(HTTP_OK_STATUS).json(talker);
   });
 
 module.exports = router;

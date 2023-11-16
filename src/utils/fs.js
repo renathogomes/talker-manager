@@ -25,8 +25,16 @@ const addTalker = async (talker) => {
   return newTalker;
 };
 
+const updateTalker = async (talker) => {
+  const talkers = await readTalkerFile();
+  const talkerIndex = talkers.findIndex((t) => t.id === talker.id);
+  talkers[talkerIndex] = talker;
+  await fs.writeFile(path.resolve(__dirname, TALKER_FILE), JSON.stringify(talkers));
+};
+
 module.exports = {
   readTalkerFile,
   findTalkerById,
   addTalker,
+  updateTalker,
 };
