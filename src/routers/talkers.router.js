@@ -1,6 +1,9 @@
-const express = require('express');
+const express = require('express'); 
+
+const router = express.Router();
 
 const { readTalkerFile, findTalkerById, addTalker } = require('../utils/fs');
+
 const authorizationValidation = require('../middleware/authorization.validation');
 const nameValidation = require('../middleware/name.validation');
 const ageValidate = require('../middleware/age.validation');
@@ -9,8 +12,6 @@ const watchedAtValidation = require('../middleware/watchedAt.validation');
 const rateValidation = require('../middleware/rate.validation');
 const rateZeroValidation = require('../middleware/rate.zero.validation');
 const rateRangeValidation = require('../middleware/rate.range.validation');
-
-const router = express.Router();
 
 const HTTP_OK_STATUS = 200;
 const HTTP_CREATED_STATUS = 201;
@@ -28,18 +29,18 @@ router.get('/talker/:id', async (req, res) => {
 });
 
 router.post('/talker',
-  authorizationValidation,
-  nameValidation,
-  ageValidate,
   talkValidation,
-  watchedAtValidation,
   rateZeroValidation,
   rateValidation,
   rateRangeValidation,
+  authorizationValidation,
+  nameValidation,
+  ageValidate,
+  watchedAtValidation,
   async (req, res) => {
     const newTalker = req.body;
-    await addTalker(newTalker);
-    res.status(HTTP_CREATED_STATUS).json(newTalker);
+    const n = await addTalker(newTalker);
+    res.status(HTTP_CREATED_STATUS).json(n);
   });
 
 module.exports = router;

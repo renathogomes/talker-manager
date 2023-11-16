@@ -1,7 +1,7 @@
 const express = require('express');
 
-const talkersRouter = require('./routers/talkers.router');
 const loginRouter = require('./routers/login.router');
+const talkersRouter = require('./routers/talkers.router');
 
 const app = express();
 app.use(express.json());
