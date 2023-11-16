@@ -33,8 +33,8 @@ router.post('/talker',
   ageValidate,
   talkValidation,
   watchedAtValidation,
-  rateValidation,
   rateZeroValidation,
+  rateValidation,
   rateRangeValidation,
   async (req, res) => {
     const newTalker = req.body;
