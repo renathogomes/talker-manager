@@ -15,6 +15,7 @@ const rateRangeValidation = require('../middleware/rate.range.validation');
 
 const HTTP_OK_STATUS = 200;
 const HTTP_CREATED_STATUS = 201;
+const HTTP_NOT_FOUND_STATUS = 404;
 
 router.get('/talker', async (_req, res) => {
   const talkers = await readTalkerFile();
@@ -24,7 +25,10 @@ router.get('/talker', async (_req, res) => {
 router.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
   const talker = await findTalkerById(id);
-  if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  if (!talker) {
+    return res.status(HTTP_NOT_FOUND_STATUS)
+      .json({ message: 'Pessoa palestrante não encontrada' }); 
+  }
   res.status(HTTP_OK_STATUS).json(talker);
 });
 
